@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MailGuard | Email threat detection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">M</span><span>MailGuard</span></a>
+        <span class="status"><span class="status-dot"></span> Local analysis enabled</span>
+    </header>
+
+    <main class="shell">
+        <section class="hero">
+            <div>
+                <p class="eyebrow">EMAIL SECURITY WORKBENCH</p>
+                <h1>Detect suspicious email threats<br><span>before they reach your team.</span></h1>
+                <p class="hero-copy">Analyze message text and headers with explainable, privacy-first checks. Nothing leaves this browser.</p>
+            </div>
+            <div class="hero-stat"><strong id="scan-count">0</strong><span>scans this session</span></div>
+        </section>
+
+        <section class="workspace">
+            <div class="panel input-panel">
+                <div class="panel-heading">
+                    <div><p class="eyebrow">1 / INGEST</p><h2>Inspect an email</h2></div>
+                    <button class="text-button" id="sample-btn" type="button">Load sample</button>
+                </div>
+                <label for="email-input">Paste raw email, headers, or message body</label>
+                <textarea id="email-input" placeholder="From: billing@example.com&#10;Subject: Urgent account verification required&#10;&#10;Paste the email content here..."></textarea>
+                <div class="input-footer">
+                    <span id="character-count">0 characters</span>
+                    <button class="primary-button" id="analyze-btn" type="button">Analyze message <span>→</span></button>
+                </div>
+                <p class="privacy-note"><span>●</span> Private by design — analysis runs locally in your browser.</p>
+            </div>
+
+            <div class="panel result-panel" id="result-panel">
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-icon">⌁</div>
+                    <h2>Your analysis appears here</h2>
+                    <p>Paste an email and select <strong>Analyze message</strong> to identify phishing, credential theft, malicious links, and social-engineering signals.</p>
+                </div>
+                <div id="results" class="hidden">
+                    <div class="panel-heading">
+                        <div><p class="eyebrow">2 / VERDICT</p><h2>Threat assessment</h2></div>
+                        <span id="risk-badge" class="risk-badge"></span>
+                    </div>
+                    <div class="risk-summary">
+                        <div class="score-ring"><strong id="risk-score">0</strong><span>/100</span></div>
+                        <div><h3 id="verdict-title"></h3><p id="verdict-copy"></p></div>
+                    </div>
+                    <div class="meter"><span id="meter-fill"></span></div>
+                    <div class="result-section">
+                        <div class="section-title"><span>Detected indicators</span><span id="indicator-count"></span></div>
+                        <ul id="indicator-list" class="indicator-list"></ul>
+                    </div>
+                    <div class="result-section recommendation">
+                        <div class="section-title">Recommended action</div>
+                        <p id="recommendation"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-grid">
+            <article><span class="info-icon blue">↗</span><div><h3>Link inspection</h3><p>Flags URL shorteners, lookalike domains, and risky schemes.</p></div></article>
+            <article><span class="info-icon amber">!</span><div><h3>Social engineering</h3><p>Detects urgency, payment pressure, and credential requests.</p></div></article>
+            <article><span class="info-icon green">✓</span><div><h3>Explainable results</h3><p>Every score is backed by indicators you can review.</p></div></article>
+        </section>
+        <p class="disclaimer">This heuristic tool is a triage aid, not a replacement for a secure email gateway, antivirus, or trained analyst.</p>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
