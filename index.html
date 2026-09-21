@@ -3,75 +3,127 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MailGuard | Email threat detection</title>
+    <meta name="description" content="A calm, friendly dashboard for planning your budget and tracking spending.">
+    <title>Pennywise | Your money, made simple</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="topbar">
-        <a class="brand" href="index.html"><span class="brand-mark">M</span><span>MailGuard</span></a>
-        <span class="status"><span class="status-dot"></span> Local analysis enabled</span>
+        <a class="brand" href="index.html" aria-label="Pennywise home">
+            <span class="brand-mark">✦</span><span>Pennywise</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a class="active" href="#overview">Overview</a>
+            <a href="#budgets">Budgets</a>
+            <a href="#transactions">Transactions</a>
+        </nav>
+        <div class="topbar-actions">
+            <button class="icon-button" aria-label="Notifications">♧<span class="notification-dot"></span></button>
+            <div class="avatar" aria-label="Account for Alex Morgan">AM</div>
+        </div>
     </header>
 
-    <main class="shell">
-        <section class="hero">
+    <main class="shell" id="overview">
+        <section class="welcome-row">
             <div>
-                <p class="eyebrow">EMAIL SECURITY WORKBENCH</p>
-                <h1>Detect suspicious email threats<br><span>before they reach your team.</span></h1>
-                <p class="hero-copy">Analyze message text and headers with explainable, privacy-first checks. Nothing leaves this browser.</p>
+                <p class="eyebrow">SUNDAY, SEPTEMBER 20, 2026</p>
+                <h1>Good morning, Alex <span>🌤️</span></h1>
+                <p class="subheading">Here’s your money snapshot for September.</p>
             </div>
-            <div class="hero-stat"><strong id="scan-count">0</strong><span>scans this session</span></div>
+            <button class="primary-button" id="open-expense" type="button"><span>+</span> Add expense</button>
         </section>
 
-        <section class="workspace">
-            <div class="panel input-panel">
-                <div class="panel-heading">
-                    <div><p class="eyebrow">1 / INGEST</p><h2>Inspect an email</h2></div>
-                    <button class="text-button" id="sample-btn" type="button">Load sample</button>
+        <section class="summary-grid" aria-label="September summary">
+            <article class="summary-card balance-card">
+                <div class="card-label"><span class="label-icon mint">↗</span><span>Available to spend</span><button class="more-button" aria-label="More options">•••</button></div>
+                <strong class="amount" id="available-amount">$1,840.50</strong>
+                <p class="positive"><span>↑ 8.4%</span> vs. last month</p>
+                <div class="mini-bars" aria-label="Spending trend">
+                    <i style="height:35%"></i><i style="height:48%"></i><i style="height:42%"></i><i style="height:63%"></i><i style="height:55%"></i><i style="height:76%"></i><i class="current" style="height:49%"></i>
                 </div>
-                <label for="email-input">Paste raw email, headers, or message body</label>
-                <textarea id="email-input" placeholder="From: billing@example.com&#10;Subject: Urgent account verification required&#10;&#10;Paste the email content here..."></textarea>
-                <div class="input-footer">
-                    <span id="character-count">0 characters</span>
-                    <button class="primary-button" id="analyze-btn" type="button">Analyze message <span>→</span></button>
-                </div>
-                <p class="privacy-note"><span>●</span> Private by design — analysis runs locally in your browser.</p>
-            </div>
+            </article>
+            <article class="summary-card">
+                <div class="card-label"><span class="label-icon lavender">◷</span><span>Spent this month</span></div>
+                <strong class="amount" id="spent-amount">$1,159.50</strong>
+                <p class="muted">of your <strong>$3,000</strong> monthly budget</p>
+                <div class="progress-track"><span id="spent-progress" style="width:38.65%"></span></div>
+                <div class="progress-meta"><span>38.7% used</span><span>$1,840.50 left</span></div>
+            </article>
+            <article class="summary-card">
+                <div class="card-label"><span class="label-icon peach">◎</span><span>Saving goal</span><span class="goal-percent">64%</span></div>
+                <strong class="amount">$3,200 <small>of $5,000</small></strong>
+                <p class="muted">Emergency fund</p>
+                <div class="progress-track peach-track"><span style="width:64%"></span></div>
+                <div class="progress-meta"><span>On track</span><span>$1,800 to go</span></div>
+            </article>
+        </section>
 
-            <div class="panel result-panel" id="result-panel">
-                <div class="empty-state" id="empty-state">
-                    <div class="empty-icon">⌁</div>
-                    <h2>Your analysis appears here</h2>
-                    <p>Paste an email and select <strong>Analyze message</strong> to identify phishing, credential theft, malicious links, and social-engineering signals.</p>
+        <div class="content-grid">
+            <section class="panel budgets-panel" id="budgets">
+                <div class="section-heading">
+                    <div><p class="eyebrow">YOUR PLAN</p><h2>Monthly budgets</h2></div>
+                    <button class="link-button" id="edit-budget" type="button">Edit budget <span>→</span></button>
                 </div>
-                <div id="results" class="hidden">
-                    <div class="panel-heading">
-                        <div><p class="eyebrow">2 / VERDICT</p><h2>Threat assessment</h2></div>
-                        <span id="risk-badge" class="risk-badge"></span>
-                    </div>
-                    <div class="risk-summary">
-                        <div class="score-ring"><strong id="risk-score">0</strong><span>/100</span></div>
-                        <div><h3 id="verdict-title"></h3><p id="verdict-copy"></p></div>
-                    </div>
-                    <div class="meter"><span id="meter-fill"></span></div>
-                    <div class="result-section">
-                        <div class="section-title"><span>Detected indicators</span><span id="indicator-count"></span></div>
-                        <ul id="indicator-list" class="indicator-list"></ul>
-                    </div>
-                    <div class="result-section recommendation">
-                        <div class="section-title">Recommended action</div>
-                        <p id="recommendation"></p>
-                    </div>
+                <div class="budget-list" id="budget-list">
+                    <div class="budget-row" data-category="Home" data-spent="850" data-limit="1200"><span class="category-icon home">⌂</span><div class="budget-info"><div><strong>Home</strong><span>$850 <em>of $1,200</em></span></div><div class="progress-track"><span style="width:70%"></span></div><small>$350 left</small></div><b>70%</b></div>
+                    <div class="budget-row" data-category="Food" data-spent="189.50" data-limit="450"><span class="category-icon food">♨</span><div class="budget-info"><div><strong>Food & dining</strong><span>$189.50 <em>of $450</em></span></div><div class="progress-track"><span style="width:42%; background:#f4b860"></span></div><small>$260.50 left</small></div><b>42%</b></div>
+                    <div class="budget-row" data-category="Transport" data-spent="75" data-limit="250"><span class="category-icon transport">⌁</span><div class="budget-info"><div><strong>Transport</strong><span>$75 <em>of $250</em></span></div><div class="progress-track"><span style="width:30%; background:#8b9cf6"></span></div><small>$175 left</small></div><b>30%</b></div>
+                    <div class="budget-row" data-category="Fun" data-spent="45" data-limit="200"><span class="category-icon fun">✦</span><div class="budget-info"><div><strong>Fun & extras</strong><span>$45 <em>of $200</em></span></div><div class="progress-track"><span style="width:22.5%; background:#ec91ae"></span></div><small>$155 left</small></div><b>23%</b></div>
                 </div>
+                <button class="add-budget" type="button"><span>+</span> Add a budget category</button>
+            </section>
+
+            <section class="panel spending-panel">
+                <div class="section-heading">
+                    <div><p class="eyebrow">WHERE IT GOES</p><h2>Spending breakdown</h2></div>
+                    <button class="period-button" type="button">This month⌄</button>
+                </div>
+                <div class="donut-wrap">
+                    <div class="donut-chart"><div><strong>$1,159</strong><span>spent</span></div></div>
+                    <ul class="legend">
+                        <li><span class="legend-dot home-dot"></span><span>Home</span><b>73.3%</b></li>
+                        <li><span class="legend-dot food-dot"></span><span>Food</span><b>16.3%</b></li>
+                        <li><span class="legend-dot transport-dot"></span><span>Transport</span><b>6.5%</b></li>
+                        <li><span class="legend-dot fun-dot"></span><span>Fun & extras</span><b>3.9%</b></li>
+                    </ul>
+                </div>
+                <div class="insight"><span>✦</span><p><strong>Nice work!</strong> You’re spending 12% less on dining than last month.</p></div>
+            </section>
+        </div>
+
+        <section class="panel transactions-panel" id="transactions">
+            <div class="section-heading">
+                <div><p class="eyebrow">ACTIVITY</p><h2>Recent transactions</h2></div>
+                <button class="link-button" type="button">View all <span>→</span></button>
+            </div>
+            <div class="transaction-list" id="transaction-list">
+                <div class="transaction"><span class="merchant-icon grocery">▦</span><div><strong>Whole Foods Market</strong><small>Today, 10:42 AM · Food & dining</small></div><b>−$64.28</b></div>
+                <div class="transaction"><span class="merchant-icon home-icon">⌂</span><div><strong>Monthly rent</strong><small>Sep 1 · Home</small></div><b>−$850.00</b></div>
+                <div class="transaction"><span class="merchant-icon transport-icon">⌁</span><div><strong>Metro card refill</strong><small>Aug 30 · Transport</small></div><b>−$25.00</b></div>
+                <div class="transaction"><span class="merchant-icon coffee">☕</span><div><strong>Blue Bottle Coffee</strong><small>Aug 29 · Food & dining</small></div><b>−$6.50</b></div>
             </div>
         </section>
 
-        <section class="info-grid">
-            <article><span class="info-icon blue">↗</span><div><h3>Link inspection</h3><p>Flags URL shorteners, lookalike domains, and risky schemes.</p></div></article>
-            <article><span class="info-icon amber">!</span><div><h3>Social engineering</h3><p>Detects urgency, payment pressure, and credential requests.</p></div></article>
-            <article><span class="info-icon green">✓</span><div><h3>Explainable results</h3><p>Every score is backed by indicators you can review.</p></div></article>
-        </section>
-        <p class="disclaimer">This heuristic tool is a triage aid, not a replacement for a secure email gateway, antivirus, or trained analyst.</p>
+        <p class="privacy-note"><span>●</span> Your data stays private on this device.</p>
     </main>
+
+    <div class="modal-backdrop hidden" id="expense-modal">
+        <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="close-button" id="close-expense" aria-label="Close">×</button>
+            <p class="eyebrow">NEW TRANSACTION</p>
+            <h2 id="modal-title">Add an expense</h2>
+            <p class="modal-copy">Keep your spending plan up to date in a few seconds.</p>
+            <form id="expense-form">
+                <label for="expense-name">What did you spend on?</label>
+                <input id="expense-name" required placeholder="e.g. Grocery run">
+                <div class="form-row">
+                    <div><label for="expense-amount">Amount</label><div class="amount-input"><span>$</span><input id="expense-amount" type="number" min="0.01" step="0.01" required placeholder="0.00"></div></div>
+                    <div><label for="expense-category">Category</label><select id="expense-category"><option>Food & dining</option><option>Home</option><option>Transport</option><option>Fun & extras</option></select></div>
+                </div>
+                <button class="primary-button full-button" type="submit">Save expense <span>→</span></button>
+            </form>
+        </section>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
